@@ -2,7 +2,7 @@
   "name": "reflect-metadata",
   "version": "0.1.13",
   "description": "Polyfill for Metadata Reflection API",
-  "main": "Reflect.js",
+  "main": "Reflect.min.js",
   "types": "index.d.ts",
   "typescript": {
     "definition": "Reflect.d.ts"
@@ -48,7 +48,11 @@
     "gulp-rename": "^1.2.2",
     "gulp-sequence": "^0.4.6",
     "gulp-tsb": "^2.0.3",
+    "gulp-uglify": "^2.1.2",
     "mocha": "^3.2.0",
     "typescript": "^2.1.4"
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.10"
   }
 }

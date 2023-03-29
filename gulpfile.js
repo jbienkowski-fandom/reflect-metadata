@@ -5,6 +5,7 @@ const tsb = require("gulp-tsb");
 const mocha = require("gulp-mocha");
 const emu = require("gulp-emu");
 const rename = require("gulp-rename");
+const uglify = require("gulp-uglify");
 const gls = require("gulp-live-server");
 
 const debugProject = tsb.create("tsconfig.json");
@@ -21,7 +22,13 @@ gulp.task("build:reflect", () => gulp
     .pipe(project())
     .pipe(gulp.dest(".")));
 
-gulp.task("build:tests", ["build:reflect"], () => gulp
+gulp.task("compress:reflect", () => gulp
+    .src("Reflect.js")
+    .pipe(rename('Reflect.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest(".")));
+
+gulp.task("build:tests", ["reflect"], () => gulp
     .src(["test/**/*.ts"])
     .pipe(tests())
     .pipe(gulp.dest("test")));
@@ -66,7 +73,7 @@ gulp.task("watch", ["watch:reflect", "watch:spec"], () => {
 });
 
 gulp.task("prepublish", sequence("release", "clean", "test", "test:use-polyfill"));
-gulp.task("reflect", ["build:reflect"]);
+gulp.task("reflect", ["build:reflect", "compress:reflect"]);
 gulp.task("tests", ["build:tests"]);
 gulp.task("spec", ["build:spec"]);
 gulp.task("start", ["watch"]);
